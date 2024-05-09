@@ -26,7 +26,7 @@ const List = () => {
                 <CollectionHeader>
                     <Button variant="tiny">Download data <DownloadIcon /></Button>
                     <CollectionActions>
-                        <InventoryInfo>{c.count} <img src="/inventory.png" /></InventoryInfo>
+                        <InventoryInfo>{c.count} <img src="inventory.png" /></InventoryInfo>
                         <Button variant="fluid" onClick={() => {
                             setSelectedCollection(c);
                             showCollectionsModal(CollectionModalAction.REMOVE_COLLECTION);

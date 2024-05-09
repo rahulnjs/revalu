@@ -27,7 +27,7 @@ const DeleteCollectionForm = () => {
                 >
                     Delete
                 </Button>
-                <Button variant="secondary-full">Cancel</Button>
+                <Button variant="secondary-full" onClick={hideCollectionsModal}>Cancel</Button>
             </Actions>
         </Wrapper>
     );

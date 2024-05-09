@@ -1,4 +1,5 @@
 import styled from "styled-components"
+import { device } from "../../util/style";
 
 const navs = ['Materials', 'Elements', 'Projects', 'Manufacturers', 'Collections'];
 
@@ -6,13 +7,13 @@ const navs = ['Materials', 'Elements', 'Projects', 'Manufacturers', 'Collections
 const Header = () => {
     return <HeaderWrapper>
         <Logo>
-            <img src="/favico.png" />
+            <img src="favico.png" />
         </Logo>
         <Nav>
             {navs.map((nav, i) => <NavItem key={nav} isActive={i === 4}>{nav}</NavItem>)}
         </Nav>
         <Avatar>
-            <img src="/avatar.jpg" />
+            <img src="avatar.jpg" />
         </Avatar>
     </HeaderWrapper>
 }
@@ -39,6 +40,18 @@ const Logo = styled.div`
 const Nav = styled.nav`
     display:flex;
     gap: 10px;
+
+    @media ${device.mobile} {
+        display: none;
+    }
+
+    @media ${device.laptop} {
+        display: flex;
+    }
+
+
+
+
 `;
 
 const Avatar = styled.div`

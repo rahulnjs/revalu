@@ -51,7 +51,3 @@ const CollectionsExplorer = styled.div`
     }
 
 `;
-
-const CollectionsList = styled.div`
-    flex-grow: 1;
-`
