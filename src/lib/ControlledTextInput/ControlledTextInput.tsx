@@ -57,6 +57,7 @@ const ControlledTextInput = ({
 const ControlledTextWrapper = styled.div``;
 const Label = styled.div`
     margin-bottom: 5px;
+    font-weight: 500;
 `;
 const Asterics = styled.span`
     color: #ef4444;
@@ -66,7 +67,7 @@ const TextCounter = styled.div<{ isError?: boolean }>`
     color: ${props => props.isError ? '#ef4444' : '#77776e'};
     text-align: right;
     margin-top: 2px;
-    font-size: .8rem;
+    font-size: .65rem;
 `;
 
 export default ControlledTextInput;

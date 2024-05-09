@@ -3,8 +3,17 @@ import { initial_collections } from "../../../data/mock";
 import Card from "../../../lib/Card/Card";
 import Divider from "../../../lib/Divider/Divider";
 import Button from "../../../lib/Button/Button";
+import { FiTrash2 as TrashIcon, FiDownloadCloud as DownloadIcon, FiPlus } from 'react-icons/fi';
+import { device } from "../../../util/style";
+import { useState } from "react";
+import LightModal from "../../../lib/Modal/LightModal";
+import ControlledTextInput from "../../../lib/ControlledTextInput/ControlledTextInput";
+import { FormItem } from "../../../lib/Common";
+
 
 const List = () => {
+    const [isOpen, setIsOpen] = useState(false);
+
     return <ListWrapper>
         <SectionHeaderWrapper>
             <SectionHeader>My Collections</SectionHeader>
@@ -15,14 +24,14 @@ const List = () => {
         <ResultInfo>
             Showing 118 Results
         </ResultInfo>
-        <Divider />
+        <Divider gap={1} />
         <CollectionList>
             {initial_collections.map(c => (<Card>
                 <CollectionHeader>
-                    <Button variant="tiny">Download data X</Button>
+                    <Button variant="tiny">Download data <DownloadIcon /></Button>
                     <CollectionActions>
-                        <div>{c.count} r</div>
-                        <div>del</div>
+                        <InventoryInfo>{c.count} <img src="/inventory.png" /></InventoryInfo>
+                        <Button variant="fluid"><TrashIcon /></Button>
                     </CollectionActions>
                 </CollectionHeader>
                 <CollectionTitle>{c.title}</CollectionTitle>
@@ -30,10 +39,35 @@ const List = () => {
             </Card>))}
             <Card variant="action">
                 <AddButtonWrapper>
-                    <AddButton>+</AddButton>
+                    <AddButton><Button variant="fluid" onClick={() => setIsOpen(true)}><FiPlus /></Button></AddButton>
                 </AddButtonWrapper>
             </Card>
         </CollectionList>
+        <LightModal isOpen={isOpen} ariaHideApp={false}>
+            <h2>
+                New Collection
+            </h2>
+            <FormItem>
+                <ControlledTextInput
+                    label="Collection Name"
+                    maxChars={40}
+                    placeholder="Collection Title"
+                    isMandatory={true}
+                    onChange={(v) => { }}
+                    variant="input"
+                />
+            </FormItem>
+            <FormItem>
+                <ControlledTextInput
+                    label="Description"
+                    maxChars={140}
+                    placeholder=""
+                    isMandatory={true}
+                    onChange={(v) => { }}
+                    variant="textarea"
+                />
+            </FormItem>
+        </LightModal>
     </ListWrapper >
 }
 
@@ -46,8 +80,20 @@ const ListWrapper = styled.div`
 const CollectionList = styled.div`
     display: grid;
     gap: 16px;
-    grid-template-columns: 1fr 1fr 1fr;
     margin-top: 16px;
+
+    @media ${device.mobile} { 
+        grid-template-columns: 1fr;
+    }
+
+    @media ${device.tablet} { 
+        grid-template-columns: 1fr 1fr;
+    }
+
+    @media ${device.laptop} { 
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
 `;
 
 
@@ -65,7 +111,7 @@ const CollectionTitle = styled.div`
 
 
 const CollectionDescription = styled.div`
-    font-size: .7rem;
+    font-size: .65rem;
     color: #2b2b2b;
     margin-top: 8px;
 `;
@@ -89,10 +135,17 @@ const SectionHeader = styled.h2`
 
 const SectionDescription = styled.div`
     margin-bottom: 30px;
-    width: 30%;
     font-weight: 400;
     font-size: .8rem; 
     color: #2b2b2b;
+
+    @media${device.tablet} {
+        width: 60%;
+    }
+
+    @media${device.laptop} {
+        width: 30%;
+    }
 `;
 
 
@@ -100,6 +153,7 @@ const SectionDescription = styled.div`
 const CollectionActions = styled.div`
     display: flex;
     gap: 10px;
+    font-size: .6rem;
 `;
 
 const AddButtonWrapper = styled.div`
@@ -111,7 +165,16 @@ const AddButtonWrapper = styled.div`
 `;
 
 const AddButton = styled.div`
-    padding: 12px 18px 16px 18px;
+    padding: 16px;
     border-radius: 50%;
     background-color: #e5e5e1;
+`;
+
+const InventoryInfo = styled.div`
+    display: flex;
+    align-items: center;
+
+    img {
+        width: 16px;
+    }
 `;
