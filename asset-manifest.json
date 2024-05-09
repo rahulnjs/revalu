@@ -1,0 +1,10 @@
+{
+  "files": {
+    "main.js": "/revalu/static/js/main.0b0f950d.js",
+    "index.html": "/revalu/index.html",
+    "main.0b0f950d.js.map": "/revalu/static/js/main.0b0f950d.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.0b0f950d.js"
+  ]
+}
