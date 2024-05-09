@@ -10,6 +10,7 @@ type ControlledTextInputProps = {
     isMandatory?: boolean;
     placeholder: string;
     onChange: (value: string) => void;
+    initalvalue?: string;
 };
 
 const ControlledTextInput = ({
@@ -19,8 +20,9 @@ const ControlledTextInput = ({
     maxChars,
     placeholder,
     isMandatory,
+    initalvalue = ''
 }: ControlledTextInputProps) => {
-    const [value, setValue] = useState("");
+    const [value, setValue] = useState(initalvalue);
     const [isError, setIsError] = useState(false);
     const id = useId();
 
@@ -42,12 +44,13 @@ const ControlledTextInput = ({
                     onChange={(e) => onInput(e.target.value)}
                     isError={isError}
                     placeholder={placeholder}
+                    value={value}
                 />
             }
             {variant === 'textarea' &&
                 <TextArea id={id} onChange={(e) => onInput(e.target.value)}
                     isError={isError}
-                    placeholder={placeholder} />
+                    placeholder={placeholder} value={value} />
             }
             <TextCounter isError={isError}>{value.length} / {maxChars}</TextCounter>
         </ControlledTextWrapper>

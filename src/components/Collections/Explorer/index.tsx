@@ -3,11 +3,15 @@ import Button from "../../../lib/Button/Button";
 import Card from "../../../lib/Card/Card";
 import Divider from "../../../lib/Divider/Divider";
 import styled from "styled-components";
+import { CollectionModalAction, useRevaluStore } from "../../../store";
 
 
 const collections = [1, 2, 3, 4];
 
 const Explorer = () => {
+
+    const { showCollectionsModal } = useRevaluStore();
+
     return <Card elevation={1}>
         <Header>
             My Collections <FiChevronDown />
@@ -20,7 +24,7 @@ const Explorer = () => {
             <FiChevronLeft />
         </CollectionItem>)}
         <Divider gap={3} />
-        <Button variant="fluid"><FiFolderPlus /> New collection</Button>
+        <Button variant="fluid" onClick={() => showCollectionsModal(CollectionModalAction.ADD_COLLECTION)}><FiFolderPlus /> New collection</Button>
     </Card>
 }
 

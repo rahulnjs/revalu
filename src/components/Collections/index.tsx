@@ -2,14 +2,24 @@ import styled from "styled-components";
 import Explorer from "./Explorer";
 import List from "./List";
 import { device } from "../../util/style";
+import { CollectionModalAction, useRevaluStore } from "../../store";
+import LightModal from "../../lib/Modal/LightModal";
+import NewCollectionForm from "./NewCollectionForm/NewCollectionForm";
+import DeleteCollectionForm from "./DeleteCollectionForm/DeleteCollectionForm";
 
 const Collections = () => {
+
+    const { isCollectionModalOpen, collectionModalAction } = useRevaluStore();
 
     return <CollectionsWrapper>
         <CollectionsExplorer >
             <Explorer />
         </CollectionsExplorer>
         <List />
+        <LightModal isOpen={isCollectionModalOpen} ariaHideApp={false}>
+            {collectionModalAction === CollectionModalAction.ADD_COLLECTION && <NewCollectionForm />}
+            {collectionModalAction === CollectionModalAction.REMOVE_COLLECTION && <DeleteCollectionForm />}
+        </LightModal>
     </CollectionsWrapper>
 }
 

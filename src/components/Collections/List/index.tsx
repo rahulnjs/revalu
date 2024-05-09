@@ -1,18 +1,14 @@
 import styled from "styled-components";
-import { initial_collections } from "../../../data/mock";
 import Card from "../../../lib/Card/Card";
 import Divider from "../../../lib/Divider/Divider";
 import Button from "../../../lib/Button/Button";
 import { FiTrash2 as TrashIcon, FiDownloadCloud as DownloadIcon, FiPlus } from 'react-icons/fi';
 import { device } from "../../../util/style";
-import { useState } from "react";
-import LightModal from "../../../lib/Modal/LightModal";
-import ControlledTextInput from "../../../lib/ControlledTextInput/ControlledTextInput";
-import { FormItem } from "../../../lib/Common";
+import { CollectionModalAction, useRevaluStore } from "../../../store";
 
 
 const List = () => {
-    const [isOpen, setIsOpen] = useState(false);
+    const { showCollectionsModal, collections, setSelectedCollection } = useRevaluStore();
 
     return <ListWrapper>
         <SectionHeaderWrapper>
@@ -26,12 +22,15 @@ const List = () => {
         </ResultInfo>
         <Divider gap={1} />
         <CollectionList>
-            {initial_collections.map(c => (<Card>
+            {collections.map(c => (<Card key={c.id}>
                 <CollectionHeader>
                     <Button variant="tiny">Download data <DownloadIcon /></Button>
                     <CollectionActions>
                         <InventoryInfo>{c.count} <img src="/inventory.png" /></InventoryInfo>
-                        <Button variant="fluid"><TrashIcon /></Button>
+                        <Button variant="fluid" onClick={() => {
+                            setSelectedCollection(c);
+                            showCollectionsModal(CollectionModalAction.REMOVE_COLLECTION);
+                        }}><TrashIcon /></Button>
                     </CollectionActions>
                 </CollectionHeader>
                 <CollectionTitle>{c.title}</CollectionTitle>
@@ -39,35 +38,10 @@ const List = () => {
             </Card>))}
             <Card variant="action">
                 <AddButtonWrapper>
-                    <AddButton><Button variant="fluid" onClick={() => setIsOpen(true)}><FiPlus /></Button></AddButton>
+                    <Button variant="fluid" onClick={() => showCollectionsModal(CollectionModalAction.ADD_COLLECTION)}><AddButton><FiPlus /></AddButton></Button>
                 </AddButtonWrapper>
             </Card>
         </CollectionList>
-        <LightModal isOpen={isOpen} ariaHideApp={false}>
-            <h2>
-                New Collection
-            </h2>
-            <FormItem>
-                <ControlledTextInput
-                    label="Collection Name"
-                    maxChars={40}
-                    placeholder="Collection Title"
-                    isMandatory={true}
-                    onChange={(v) => { }}
-                    variant="input"
-                />
-            </FormItem>
-            <FormItem>
-                <ControlledTextInput
-                    label="Description"
-                    maxChars={140}
-                    placeholder=""
-                    isMandatory={true}
-                    onChange={(v) => { }}
-                    variant="textarea"
-                />
-            </FormItem>
-        </LightModal>
     </ListWrapper >
 }
 
@@ -162,10 +136,11 @@ const AddButtonWrapper = styled.div`
     height: 100%;
     align-items: center; 
     cursor: pointer;
+    min-height: 70px;
 `;
 
 const AddButton = styled.div`
-    padding: 16px;
+    padding: 15px 17px 13px;
     border-radius: 50%;
     background-color: #e5e5e1;
 `;
@@ -178,3 +153,4 @@ const InventoryInfo = styled.div`
         width: 16px;
     }
 `;
+

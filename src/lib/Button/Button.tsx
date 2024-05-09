@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-    variant: 'primary' | 'secondary' | 'primary-small' | 'tiny' | 'fluid'
+    variant: 'primary' | 'secondary' | 'primary-small' | 'tiny' | 'fluid' | 'secondary-full'
 
 }
 
@@ -18,6 +18,8 @@ const Button = (props: ButtonProps) => {
         return <TinyButton {...props} />
     } else if (variant === 'fluid') {
         return <FluidButton {...props} />
+    } else if (variant === 'secondary-full') {
+        return <SecondaryFullButton {...props} />
     } else {
         throw new Error(`Unknown variant ${variant}`)
     }
@@ -33,6 +35,7 @@ const BaseButton = styled.button`
     display: flex;
     align-items: center;
     gap: 5px;
+    justify-content: center;
 `;
 
 const PrimaryButton = styled(BaseButton)`
@@ -41,21 +44,30 @@ const PrimaryButton = styled(BaseButton)`
     padding: 16px;
 `;
 
+const SecondaryFullButton = styled(BaseButton)`
+    background-color: #f1f1ee;
+    color: #2b2b2b;
+    padding: 16px;
+`;
+
 
 const SecondaryButton = styled(BaseButton)`
     background-color: transparent;
     font-size: .7rem;
+    min-width: 70px;
 `;
 
 
 const FluidButton = styled(SecondaryButton)`
     padding: 0px;
+    min-width: fit-content;
 `;
 
 const PrimarySmallButton = styled(BaseButton)`
     background-color: #ece6fa;
     color: #2b2b2b;
     padding: 8px 10px;
+    font-size: .7rem;
 
     &:disabled {
         color: #cbbaf1;
